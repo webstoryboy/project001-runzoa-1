@@ -44,6 +44,19 @@ const paperlogy = localFont({
   ],
 });
 
+const paperlogyBlack = localFont({
+  variable: "--font-paperlogy-black",
+  display: "swap",
+  preload: true,
+  src: [
+    {
+      path: "../public/fonts/paperlogy-black.woff2",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+});
+
 export const metadata: Metadata = {
   title: {
     template: `%s | ${APP_NAME}`,
@@ -106,7 +119,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${anyvid.variable} ${nanumSquare.variable} ${paperlogy.variable}`}
+        className={`${anyvid.variable} ${nanumSquare.variable} ${paperlogy.variable} ${paperlogyBlack.variable}`}
       >
         {children}
       </body>

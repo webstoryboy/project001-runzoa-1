@@ -8,6 +8,7 @@ export const APP_INSTAGRAM_URL = "https://www.instagram.com/runzoa_official";
 export const APP_THREADS_URL = "https://www.threads.com/@runzoa_official";
 export const APP_GITHUB_URL =
   "https://github.com/webstoryboy/project001-runzoa-1";
+export const APP_YOUTUBE_URL = "https://www.youtube.com/@webstoryboy";
 
 export const APP_DESCRIPTION =
   "국내외 마라톤 대회 정보, 코스 정보, 참가 신청, 마라톤 팁과 가이드를 제공하는 종합 마라톤 정보 사이트입니다.";
