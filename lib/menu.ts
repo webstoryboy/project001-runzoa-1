@@ -1,25 +1,61 @@
-import { LucideIcon, Compass, Drama, Hamburger, HandHeart } from "lucide-react";
 import {
   APP_INSTAGRAM_URL,
   APP_THREADS_URL,
   APP_GITHUB_URL,
   APP_YOUTUBE_URL,
 } from "@/lib/constants";
+import {
+  LucideIcon,
+  Compass,
+  Drama,
+  Hamburger,
+  HandHeart,
+  Home,
+  Newspaper,
+  Rat,
+  Cake,
+  Goal,
+  Star,
+  User,
+  Gem,
+} from "lucide-react";
 
-export interface FooterMenu {
+export interface MenuItem {
   icon: LucideIcon;
   label: string;
   href: string;
 }
 
-export interface SocialMenu {
+export interface SocialItem {
   href: string;
   label: string;
   path: string;
 }
 
+// 기본 메뉴
+export const basicMenu: MenuItem[] = [
+  { icon: Home, label: "홈", href: "/" },
+  { icon: Newspaper, label: "공지사항", href: "/notice" },
+  { icon: Rat, label: "문의하기", href: "/contact" },
+  { icon: Compass, label: "이용약관", href: "/terms" },
+  { icon: Drama, label: "개인정보취급방침", href: "/privacy" },
+];
+
+// 로그인 안 했을 때
+export const guestMenu: MenuItem[] = [
+  { icon: Cake, label: "소개", href: "/about" },
+  { icon: Star, label: "즐겨찾기", href: "/favorites" },
+];
+
+// 로그인 했을 때
+export const userMenu: MenuItem[] = [
+  { icon: User, label: "내 정보", href: "/profile" },
+  { icon: Star, label: "즐겨찾기", href: "/favorites" },
+  { icon: Gem, label: "관리자", href: "/admin" },
+];
+
 // 푸터 메뉴
-export const footerMenu: FooterMenu[] = [
+export const footerMenu: MenuItem[] = [
   { icon: HandHeart, label: "소개", href: "/about" },
   { icon: Hamburger, label: "문의사항", href: "/contact" },
   { icon: Compass, label: "이용약관", href: "/terms" },
@@ -27,7 +63,7 @@ export const footerMenu: FooterMenu[] = [
 ];
 
 // 소셜 메뉴
-export const socialMenu: SocialMenu[] = [
+export const socialMenu: SocialItem[] = [
   {
     href: APP_INSTAGRAM_URL,
     label: "Instagram (새 탭에서 열림)",

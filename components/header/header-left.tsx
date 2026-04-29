@@ -5,7 +5,7 @@ export default function HeaderLeft() {
   return (
     <Link
       href="/"
-      className="flex h-11 items-center text-2xl uppercase font-paperlogy-black text-brand leading-none"
+      className="flex h-11 items-center text-2xl uppercase font-paperlogy font-black text-brand leading-none"
     >
       {APP_ENG_NAME}
     </Link>

@@ -6,7 +6,7 @@ export default function FooterInfo() {
   return (
     <div className="border-t border-gray-300/40 pt-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl text-brand uppercase font-paperlogy-black">
+        <h3 className="text-xl uppercase font-paperlogy font-black">
           {APP_ENG_NAME}
         </h3>
         <div className="flex items-center gap-3">

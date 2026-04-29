@@ -11,8 +11,8 @@ import {
 
 const anyvid = localFont({
   variable: "--font-anyvid",
-  display: "swap",
-  preload: true,
+  display: "optional",
+  preload: false,
   src: [
     { path: "../public/fonts/anyvid.woff2", weight: "400", style: "normal" },
   ],
@@ -37,18 +37,15 @@ const paperlogy = localFont({
   preload: false,
   src: [
     {
-      path: "../public/fonts/paperlogy.woff2",
+      path: "../public/fonts/paperlogy-regular.woff2",
       weight: "400",
       style: "normal",
     },
-  ],
-});
-
-const paperlogyBlack = localFont({
-  variable: "--font-paperlogy-black",
-  display: "swap",
-  preload: true,
-  src: [
+    {
+      path: "../public/fonts/paperlogy-semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
     {
       path: "../public/fonts/paperlogy-black.woff2",
       weight: "900",
@@ -119,7 +116,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${anyvid.variable} ${nanumSquare.variable} ${paperlogy.variable} ${paperlogyBlack.variable}`}
+        className={`${anyvid.variable} ${nanumSquare.variable} ${paperlogy.variable}`}
       >
         {children}
       </body>
