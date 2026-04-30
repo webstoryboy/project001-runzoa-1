@@ -27,7 +27,7 @@ export default function HeaderNavLink({ item }: { item: MenuItem }) {
       >
         <div className="flex items-center gap-3">
           <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-          <span className="font-nanumNeo">{item.label}</span>
+          <span className="font-anyvid">{item.label}</span>
         </div>
         <ChevronRight className="w-4 h-4" aria-hidden="true" />
       </Link>

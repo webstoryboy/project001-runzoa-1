@@ -6,9 +6,9 @@ export default function FooterInfo() {
   return (
     <div className="border-t border-gray-300/40 pt-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl uppercase font-paperlogy font-black">
+        <p className="text-xl uppercase font-paperlogy font-black">
           {APP_ENG_NAME}
-        </h3>
+        </p>
         <div className="flex items-center gap-3">
           {socialMenu.map(({ href, label, path }) => (
             <Link

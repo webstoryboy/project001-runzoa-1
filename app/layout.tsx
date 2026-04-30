@@ -11,7 +11,7 @@ import {
 
 const anyvid = localFont({
   variable: "--font-anyvid",
-  display: "optional",
+  display: "swap",
   preload: false,
   src: [
     { path: "../public/fonts/anyvid.woff2", weight: "400", style: "normal" },
