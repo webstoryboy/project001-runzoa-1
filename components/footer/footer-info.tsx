@@ -16,7 +16,7 @@ export default function FooterInfo() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={label}
+              aria-label={`${label} (새 탭에서 열림)`}
               className="text-muted-foreground hover:text-brand transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
             >
               <svg

@@ -118,7 +118,7 @@ export default function PageNotice() {
             </Badge>
             <h3
               title={selected.title}
-              className="text-gray-800 font-nanumNeo text-lg mb-3 line-clamp-2"
+              className="text-gray-800 font-nanumNeo text-xl mb-3 line-clamp-2"
             >
               {selected.title}
             </h3>

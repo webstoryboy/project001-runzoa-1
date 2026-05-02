@@ -9,6 +9,8 @@ import {
   APP_SLOGAN,
 } from "@/lib/constants";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 const anyvid = localFont({
   variable: "--font-anyvid",
   display: "swap",
@@ -118,7 +120,7 @@ export default function RootLayout({
       <body
         className={`${anyvid.variable} ${nanumSquare.variable} ${paperlogy.variable}`}
       >
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
   );
