@@ -1,15 +1,75 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { faqs } from "@/lib/data";
-import { ChevronRight, ChevronDown, Mails } from "lucide-react";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  ChevronRight,
+  ChevronDown,
+  AlertCircle,
+  MessageSquare,
+  FilePen,
+} from "lucide-react";
 
-export default function PageContact() {
+export type ContactType = "complaint" | "inquiry" | "correction";
+
+const contactTypes = [
+  {
+    type: "complaint" as ContactType,
+    label: "불편신고",
+    icon: AlertCircle,
+    badgeText: "이거 불편해요! 개선해주세요!",
+    heading: "불편한 점을 편하게 남겨주세요",
+    imageSrc: "/face/face05.webp",
+    imageAlt: "불편신고 안내 이미지",
+    description:
+      "서비스 이용 중 불편하셨던 점을 알려주세요. 더 나은 서비스를 위해 소중한 의견을 빠르게 반영하겠습니다.",
+    placeholder: "불편했던 점이나 개선이 필요한 상황을 구체적으로 적어주세요.",
+    buttonLabel: "불편신고",
+  },
+  {
+    type: "inquiry" as ContactType,
+    label: "문의사항",
+    icon: MessageSquare,
+    badgeText: "궁금한 점이 있나요? 무엇이든 물어보세요!",
+    heading: "궁금한 내용을 남겨주세요",
+    imageSrc: "/face/face06.webp",
+    imageAlt: "문의사항 안내 이미지",
+    description:
+      "서비스 이용 중 궁금한 점이나 개선 아이디어 등 다양한 의견을 언제든 편하게 남겨주세요.",
+    placeholder: "문의 내용을 자세히 적어주세요.",
+    buttonLabel: "문의하기",
+  },
+  {
+    type: "correction" as ContactType,
+    label: "수정요청",
+    icon: FilePen,
+    badgeText: "정보가 다르면 알려주세요! 바로 확인할게요!",
+    heading: "수정이 필요한 내용을 남겨주세요",
+    imageSrc: "/face/face07.webp",
+    imageAlt: "수정요청 안내 이미지",
+    description:
+      "대회 정보가 잘못되었거나 업데이트가 필요한 경우 수정 요청을 남겨주세요. 확인 후 신속히 반영하겠습니다.",
+    placeholder: "수정이 필요한 대회명과 올바른 내용을 함께 알려주세요.",
+    buttonLabel: "수정요청",
+  },
+];
+
+export default function PageContact({
+  initialType = "inquiry",
+}: {
+  initialType?: ContactType;
+}) {
+  const [selected, setSelected] = useState<ContactType>(initialType);
+
+  const current = contactTypes.find((t) => t.type === selected)!;
+  const Icon = current.icon;
+
   return (
     <div className="rounded-lg border border-dashed border-gray-200 p-4 sm:p-6">
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4">
@@ -29,11 +89,16 @@ export default function PageContact() {
                     <span className="flex-1 font-anyvid text-sm text-gray-700 transition-colors group-open:text-brand">
                       {faq.title}
                     </span>
-                    <ChevronRight aria-hidden="true" className="h-5 w-5 shrink-0 text-muted-foreground transition-all group-hover:text-brand group-open:hidden" />
-                    <ChevronDown aria-hidden="true" className="hidden h-5 w-5 shrink-0 text-brand transition-all group-open:block" />
+                    <ChevronRight
+                      aria-hidden="true"
+                      className="h-5 w-5 shrink-0 text-muted-foreground transition-all group-hover:text-brand group-open:hidden"
+                    />
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="hidden h-5 w-5 shrink-0 text-brand transition-all group-open:block"
+                    />
                   </div>
                 </summary>
-
                 <div className="border-t px-4 pb-4 pt-4 text-muted-foreground sm:px-6 sm:pb-5">
                   <Badge className="mb-3 inline-flex text-xs sm:hidden">
                     {faq.category}
@@ -50,33 +115,58 @@ export default function PageContact() {
         {/* 오른쪽: 문의 작성 */}
         <div className="order-1 rounded-lg border border-gray-200 p-4 lg:order-2 lg:p-6">
           <div className="flex h-full flex-col">
+            {/* 유형 선택 */}
+            <div
+              role="group"
+              aria-label="문의 유형 선택"
+              className="mb-5 grid grid-cols-3 gap-2"
+            >
+              {contactTypes.map(({ type, label, icon: TypeIcon }) => (
+                <Button
+                  key={type}
+                  variant={selected === type ? "default" : "ghost"}
+                  className="gap-1.5 font-anyvid"
+                  aria-pressed={selected === type}
+                  onClick={() => setSelected(type)}
+                >
+                  <TypeIcon className="h-3 w-3" />
+                  {label}
+                </Button>
+              ))}
+            </div>
+
+            {/* 헤더 */}
             <div className="mb-5 flex items-center gap-3">
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                 <Image
-                  src="/face/face05.webp"
-                  alt="문의 안내 이미지"
+                  src={current.imageSrc}
+                  alt={current.imageAlt}
                   width={56}
                   height={56}
                   className="h-full w-full object-cover"
                 />
               </div>
               <div>
-                <Badge className="mb-2 text-xs font-anyvid mr-1">
-                  문의 접수
+                <Badge
+                  variant="ghost"
+                  className="mb-1 mr-1 font-anyvid text-xs"
+                >
+                  {current.badgeText}
                 </Badge>
-                <Badge className="mb-2 text-xs font-anyvid">불편 접수</Badge>
                 <h2 className="font-nanumNeo text-lg text-gray-900 sm:text-xl">
-                  궁금한 내용을 남겨주세요
+                  {current.heading}
                 </h2>
               </div>
             </div>
 
-            <p className="mb-6 font-anyvid text-sm leading-relaxed text-muted-foreground border-t border-dashed pt-6">
-              서비스 이용 중 궁금한 점이나 불편했던 부분, 개선 아이디어, 대회
-              정보 수정 요청 등 다양한 의견을 언제든 편하게 남겨주세요.
+            {/* 설명 */}
+            <p className="mb-6 border-t border-b border-dashed py-5 font-anyvid text-sm leading-relaxed text-muted-foreground">
+              {current.description}
             </p>
 
-            <p className="sr-only" id="required-note">* 표시는 필수 입력 항목입니다.</p>
+            <p className="sr-only" id="required-note">
+              * 표시는 필수 입력 항목입니다.
+            </p>
             <form
               className="flex flex-1 flex-col"
               aria-describedby="required-note"
@@ -89,7 +179,7 @@ export default function PageContact() {
                     className="font-anyvid text-sm text-gray-800"
                   >
                     이메일
-                    <span className="text-muted-foreground text-sm">
+                    <span className="text-sm text-muted-foreground">
                       (답장이 필요한 경우 이메일로 전달됩니다.)
                     </span>
                   </FieldLabel>
@@ -107,14 +197,17 @@ export default function PageContact() {
                     htmlFor="contact-title"
                     className="font-anyvid text-sm text-gray-800"
                   >
-                    제목<span className="star" aria-hidden="true">*</span>
+                    제목
+                    <span className="star" aria-hidden="true">
+                      *
+                    </span>
                   </FieldLabel>
                   <Input
                     id="contact-title"
                     name="title"
                     required
                     aria-required="true"
-                    placeholder="문의 제목을 입력해 주세요"
+                    placeholder={`${current.label} 제목을 입력해 주세요`}
                     className="font-anyvid"
                   />
                 </Field>
@@ -124,34 +217,37 @@ export default function PageContact() {
                     htmlFor="contact-message"
                     className="font-anyvid text-sm text-gray-800"
                   >
-                    문의 내용<span className="star" aria-hidden="true">*</span>
+                    내용
+                    <span className="star" aria-hidden="true">
+                      *
+                    </span>
                   </FieldLabel>
                   <Textarea
                     id="contact-message"
                     name="message"
                     required
                     aria-required="true"
-                    placeholder="문의 내용을 자세히 적어주세요."
+                    placeholder={current.placeholder}
                     className="min-h-36 resize-none font-anyvid"
                   />
                 </Field>
               </FieldGroup>
 
-              <div className="flex gap-2 mt-6 pt-6 border-t border-dashed">
+              <div className="mt-6 flex gap-2 border-t border-dashed pt-6">
                 <Button
                   type="button"
                   size="lg"
-                  variant="outline"
-                  className="font-anyvid flex-1"
+                  variant="ghost"
+                  className="flex-1 font-anyvid"
                 >
                   취소
                 </Button>
                 <Button
                   size="lg"
-                  className="flex-1 font-anyvid bg-brand text-white hover:bg-brand/90"
+                  className="flex-1 gap-2 font-anyvid bg-brand text-white hover:bg-brand/90"
                 >
-                  <Mails className="w-4 h-4" aria-hidden="true" />
-                  문의하기
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  {current.buttonLabel}
                 </Button>
               </div>
             </form>

@@ -165,6 +165,20 @@
     @apply text-muted-foreground leading-6 text-sm list-disc list-inside ml-2;
   }
 
+  /* Detail Page */
+  .detail__container {
+    @apply border-t border-gray-200 space-y-4;
+  }
+  .detail__box {
+    @apply h-full border border-gray-200 rounded-2xl overflow-hidden;
+  }
+  .detail__header {
+    @apply border border-gray-200 border-t-3 border-t-brand rounded-2xl px-4 py-3 md:px-6 md:py-6 mt-6;
+  }
+  .detail__title {
+    @apply flex items-center gap-2 border-b border-gray-100 px-4 py-3 md:px-6 md:py-3;
+  }
+
   /* etc */
   .star {
     @apply text-red-500 ml-[-6px];

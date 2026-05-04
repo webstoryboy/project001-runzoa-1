@@ -14,10 +14,11 @@ import {
   Newspaper,
   Rat,
   Cake,
-  Goal,
+  TrafficCone,
   Star,
   User,
   Gem,
+  Cctv,
 } from "lucide-react";
 
 export interface MenuItem {
@@ -57,7 +58,9 @@ export const userMenu: MenuItem[] = [
 // 푸터 메뉴
 export const footerMenu: MenuItem[] = [
   { icon: HandHeart, label: "소개", href: "/about" },
-  { icon: Hamburger, label: "문의사항", href: "/contact" },
+  { icon: Hamburger, label: "문의사항", href: "/contact?type=inquiry" },
+  { icon: TrafficCone, label: "불편신고", href: "/contact?type=complaint" },
+  { icon: Cctv, label: "수정요청", href: "/contact?type=correction" },
   { icon: Compass, label: "이용약관", href: "/terms" },
   { icon: Drama, label: "개인정보취급방침", href: "/privacy" },
 ];

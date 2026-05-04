@@ -42,7 +42,7 @@ export default function FooterInfo() {
           const Icon = item.icon;
           return (
             <Link
-              key={item.href}
+              key={`${item.href}-${item.label}`}
               href={item.href}
               className="flex items-center gap-1 hover:text-brand transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
             >
