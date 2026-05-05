@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import { socialMenu } from "@/lib/menu";
 import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -118,9 +118,24 @@ export default function MarathonFilter() {
               className="grid grid-cols-4 gap-1 sm:grid-cols-8 md:grid-cols-9 xl:grid-cols-[repeat(11,minmax(0,1fr))]"
             >
               {[
-                "전체", "서울", "경기", "인천", "강원", "충북", "충남",
-                "대전", "세종", "전북", "전남", "광주", "경북", "경남",
-                "대구", "부산", "울산", "제주",
+                "전체",
+                "서울",
+                "경기",
+                "인천",
+                "강원",
+                "충북",
+                "충남",
+                "대전",
+                "세종",
+                "전북",
+                "전남",
+                "광주",
+                "경북",
+                "경남",
+                "대구",
+                "부산",
+                "울산",
+                "제주",
               ].map((region) => (
                 <Button
                   key={region}
@@ -142,19 +157,27 @@ export default function MarathonFilter() {
               aria-label="해외 지역"
               className="grid grid-cols-4 gap-1 sm:grid-cols-8 md:grid-cols-9 xl:grid-cols-[repeat(11,minmax(0,1fr))]"
             >
-              {["전체", "일본", "미국", "프랑스", "독일", "중국", "베트남", "태국", "홍콩"].map(
-                (region) => (
-                  <Button
-                    key={region}
-                    size="sm"
-                    variant={region === "전체" ? "destructive" : "ghost"}
-                    aria-pressed={region === "전체"}
-                    className="w-full"
-                  >
-                    {region}
-                  </Button>
-                ),
-              )}
+              {[
+                "전체",
+                "일본",
+                "미국",
+                "프랑스",
+                "독일",
+                "중국",
+                "베트남",
+                "태국",
+                "홍콩",
+              ].map((region) => (
+                <Button
+                  key={region}
+                  size="sm"
+                  variant={region === "전체" ? "destructive" : "ghost"}
+                  aria-pressed={region === "전체"}
+                  className="w-full"
+                >
+                  {region}
+                </Button>
+              ))}
             </div>
           )}
 
@@ -164,7 +187,35 @@ export default function MarathonFilter() {
             aria-label="종목"
             className="grid grid-cols-4 gap-1 sm:grid-cols-8 md:grid-cols-9 xl:grid-cols-[repeat(11,minmax(0,1fr))]"
           >
-            {["전체", "걷기", "마라톤", "사이클", "철인3종", "트레일러닝", "하이록스", "기타"].map(
+            {[
+              "전체",
+              "걷기",
+              "마라톤",
+              "사이클",
+              "철인3종",
+              "트레일러닝",
+              "하이록스",
+              "기타",
+            ].map((item) => (
+              <Button
+                key={item}
+                size="sm"
+                variant={item === "전체" ? "destructive" : "ghost"}
+                aria-pressed={item === "전체"}
+                className="w-full"
+              >
+                {item}
+              </Button>
+            ))}
+          </div>
+
+          {/* 접수 상태 */}
+          <div
+            role="group"
+            aria-label="접수 상태"
+            className="grid grid-cols-4 gap-1 sm:grid-cols-8 md:grid-cols-9 xl:grid-cols-[repeat(11,minmax(0,1fr))]"
+          >
+            {["전체", "접수 미정", "접수 전", "접수 중", "접수 마감"].map(
               (item) => (
                 <Button
                   key={item}
@@ -177,25 +228,6 @@ export default function MarathonFilter() {
                 </Button>
               ),
             )}
-          </div>
-
-          {/* 접수 상태 */}
-          <div
-            role="group"
-            aria-label="접수 상태"
-            className="grid grid-cols-4 gap-1 sm:grid-cols-8 md:grid-cols-9 xl:grid-cols-[repeat(11,minmax(0,1fr))]"
-          >
-            {["전체", "접수 미정", "접수 전", "접수 중", "접수 마감"].map((item) => (
-              <Button
-                key={item}
-                size="sm"
-                variant={item === "전체" ? "destructive" : "ghost"}
-                aria-pressed={item === "전체"}
-                className="w-full"
-              >
-                {item}
-              </Button>
-            ))}
           </div>
 
           {/* 코스 */}

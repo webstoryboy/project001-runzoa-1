@@ -19,6 +19,13 @@ import {
   User,
   Gem,
   Cctv,
+  Gamepad2,
+  Cable,
+  Helicopter,
+  BellElectric,
+  Dessert,
+  Medal,
+  LocateFixed,
 } from "lucide-react";
 
 export interface MenuItem {
@@ -63,6 +70,22 @@ export const footerMenu: MenuItem[] = [
   { icon: Cctv, label: "수정요청", href: "/contact?type=correction" },
   { icon: Compass, label: "이용약관", href: "/terms" },
   { icon: Drama, label: "개인정보취급방침", href: "/privacy" },
+];
+
+// 관리자 메뉴
+export const adminMenu: MenuItem[] = [
+  { icon: Home, label: "대시보드", href: "/admin" },
+  { icon: Gamepad2, label: "문의사항", href: "/admin/contact" },
+  { icon: Cable, label: "회원관리", href: "/admin/member" },
+  { icon: Helicopter, label: "마라톤", href: "/admin/marathon" },
+  { icon: LocateFixed, label: "리액션", href: "/admin/reactions" },
+];
+
+// 관리자 사용자 메뉴
+export const adminUserMenu: MenuItem[] = [
+  { icon: BellElectric, label: "이벤트조아", href: "https://eventzoa.com" },
+  { icon: Dessert, label: "런조아", href: "https://runzoa.com" },
+  { icon: Medal, label: "이미지조아", href: "https://imagezoa.com" },
 ];
 
 // 소셜 메뉴

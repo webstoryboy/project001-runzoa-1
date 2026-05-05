@@ -179,6 +179,11 @@
     @apply flex items-center gap-2 border-b border-gray-100 px-4 py-3 md:px-6 md:py-3;
   }
 
+  /* Admin Page */
+  .admin__container {
+    @apply md:p-6 md:space-y-6 p-4 space-y-4;
+  }
+
   /* etc */
   .star {
     @apply text-red-500 ml-[-6px];
