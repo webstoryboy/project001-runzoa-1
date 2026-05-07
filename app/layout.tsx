@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import { Suspense } from "react";
+import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { SheetProvider } from "@/contexts/context-sheet";
 import {
   APP_DESCRIPTION,
   APP_KEYWORDS,
@@ -9,7 +13,7 @@ import {
   APP_SLOGAN,
 } from "@/lib/constants";
 
-import { TooltipProvider } from "@/components/ui/tooltip";
+import AuthNotifier from "@/components/auth/auth-notifier";
 
 const anyvid = localFont({
   variable: "--font-anyvid",
@@ -120,7 +124,23 @@ export default function RootLayout({
       <body
         className={`${anyvid.variable} ${nanumSquare.variable} ${paperlogy.variable}`}
       >
-        <TooltipProvider>{children}</TooltipProvider>
+        <TooltipProvider>
+          <SheetProvider>
+            {children}
+            <Suspense>
+              <AuthNotifier />
+            </Suspense>
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                classNames: {
+                  title: "font-anyvid",
+                  description: "font-anyvid",
+                },
+              }}
+            />
+          </SheetProvider>
+        </TooltipProvider>
       </body>
     </html>
   );

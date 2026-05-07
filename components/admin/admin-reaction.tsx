@@ -1,4 +1,12 @@
-import { Heart, Star, MessageSquare, Bell, Share2, Eye } from "lucide-react";
+import {
+  Heart,
+  Star,
+  MessageSquare,
+  Bell,
+  Share2,
+  Eye,
+  BarChart2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -13,6 +21,7 @@ const reactions = [
   {
     no: 1,
     name: "2026 세이브더칠드런 국제어린이마라톤 창원",
+    views: 1842,
     likes: 128,
     bookmarks: 74,
     comments: 32,
@@ -22,6 +31,7 @@ const reactions = [
   {
     no: 2,
     name: "2026 서울 하프 마라톤",
+    views: 1374,
     likes: 95,
     bookmarks: 61,
     comments: 20,
@@ -31,6 +41,7 @@ const reactions = [
   {
     no: 3,
     name: "2026 부산 국제 마라톤",
+    views: 1201,
     likes: 87,
     bookmarks: 52,
     comments: 15,
@@ -40,6 +51,7 @@ const reactions = [
   {
     no: 4,
     name: "제15회 대구 국제 마라톤",
+    views: 983,
     likes: 64,
     bookmarks: 41,
     comments: 8,
@@ -49,6 +61,7 @@ const reactions = [
   {
     no: 5,
     name: "2026 코리아 정글 트레일",
+    views: 756,
     likes: 53,
     bookmarks: 35,
     comments: 11,
@@ -58,6 +71,7 @@ const reactions = [
   {
     no: 6,
     name: "2026 춘천 마라톤",
+    views: 621,
     likes: 42,
     bookmarks: 28,
     comments: 6,
@@ -67,6 +81,7 @@ const reactions = [
   {
     no: 7,
     name: "2026 제주 국제 마라톤",
+    views: 548,
     likes: 38,
     bookmarks: 22,
     comments: 4,
@@ -87,41 +102,75 @@ export default function AdminReaction() {
       </div>
 
       {/* 통계 */}
-      <dl className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      <dl className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <div className="bg-white border rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <dt className="text-sm text-muted-foreground font-paperlogy">좋아요</dt>
+            <dt className="text-sm text-muted-foreground font-paperlogy">
+              페이지 뷰
+            </dt>
+            <BarChart2 className="w-4 h-4 text-indigo-500" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-indigo-500">
+            7,325
+          </dd>
+        </div>
+        <div className="bg-white border rounded-lg p-4">
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">
+              좋아요
+            </dt>
             <Heart className="w-4 h-4 text-rose-500" aria-hidden="true" />
           </div>
-          <dd className="text-2xl font-semibold font-paperlogy text-rose-500">507</dd>
+          <dd className="text-2xl font-semibold font-paperlogy text-rose-500">
+            507
+          </dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <dt className="text-sm text-muted-foreground font-paperlogy">즐겨찾기</dt>
+            <dt className="text-sm text-muted-foreground font-paperlogy">
+              즐겨찾기
+            </dt>
             <Star className="w-4 h-4 text-amber-500" aria-hidden="true" />
           </div>
-          <dd className="text-2xl font-semibold font-paperlogy text-amber-500">313</dd>
+          <dd className="text-2xl font-semibold font-paperlogy text-amber-500">
+            313
+          </dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <dt className="text-sm text-muted-foreground font-paperlogy">댓글</dt>
-            <MessageSquare className="w-4 h-4 text-violet-500" aria-hidden="true" />
+            <dt className="text-sm text-muted-foreground font-paperlogy">
+              댓글
+            </dt>
+            <MessageSquare
+              className="w-4 h-4 text-violet-500"
+              aria-hidden="true"
+            />
           </div>
-          <dd className="text-2xl font-semibold font-paperlogy text-violet-500">96</dd>
+          <dd className="text-2xl font-semibold font-paperlogy text-violet-500">
+            96
+          </dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <dt className="text-sm text-muted-foreground font-paperlogy">알림</dt>
+            <dt className="text-sm text-muted-foreground font-paperlogy">
+              알림
+            </dt>
             <Bell className="w-4 h-4 text-blue-500" aria-hidden="true" />
           </div>
-          <dd className="text-2xl font-semibold font-paperlogy text-blue-500">210</dd>
+          <dd className="text-2xl font-semibold font-paperlogy text-blue-500">
+            210
+          </dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <dt className="text-sm text-muted-foreground font-paperlogy">공유</dt>
+            <dt className="text-sm text-muted-foreground font-paperlogy">
+              공유
+            </dt>
             <Share2 className="w-4 h-4 text-sky-500" aria-hidden="true" />
           </div>
-          <dd className="text-2xl font-semibold font-paperlogy text-sky-500">56</dd>
+          <dd className="text-2xl font-semibold font-paperlogy text-sky-500">
+            56
+          </dd>
         </div>
       </dl>
 
@@ -132,24 +181,32 @@ export default function AdminReaction() {
             <TableRow className="bg-gray-50">
               <TableHead className="w-[50px] text-center">No</TableHead>
               <TableHead>마라톤명</TableHead>
-              <TableHead className="w-[70px] text-center text-rose-500">좋아요</TableHead>
-              <TableHead className="w-[70px] text-center text-amber-500">즐겨찾기</TableHead>
-              <TableHead className="w-[60px] text-center text-violet-500 hidden sm:table-cell">댓글</TableHead>
-              <TableHead className="w-[60px] text-center text-blue-500 hidden md:table-cell">알림</TableHead>
-              <TableHead className="w-[60px] text-center text-sky-500 hidden lg:table-cell">공유</TableHead>
-              <TableHead className="w-[60px] text-center">관리</TableHead>
+              <TableHead className="w-[80px] text-center">페이지 뷰</TableHead>
+              <TableHead className="w-[80px] text-center">좋아요</TableHead>
+              <TableHead className="w-[80px] text-center">즐겨찾기</TableHead>
+              <TableHead className="w-[80px] text-center">댓글</TableHead>
+              <TableHead className="w-[80px] text-center">알림</TableHead>
+              <TableHead className="w-[80px] text-center">공유</TableHead>
+              <TableHead className="w-[80px] text-center">관리</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {reactions.map((row) => (
               <TableRow key={row.no} className="hover:bg-gray-50">
-                <TableCell className="text-center text-muted-foreground">{row.no}</TableCell>
+                <TableCell className="text-center text-muted-foreground">
+                  {row.no}
+                </TableCell>
                 <TableCell className="font-medium">{row.name}</TableCell>
-                <TableCell className="text-center text-rose-500 font-paperlogy">{row.likes}</TableCell>
-                <TableCell className="text-center text-amber-500 font-paperlogy">{row.bookmarks}</TableCell>
-                <TableCell className="text-center text-violet-500 font-paperlogy hidden sm:table-cell">{row.comments}</TableCell>
-                <TableCell className="text-center text-blue-500 font-paperlogy hidden md:table-cell">{row.notifications}</TableCell>
-                <TableCell className="text-center text-sky-500 font-paperlogy hidden lg:table-cell">{row.shares}</TableCell>
+                <TableCell className="text-center">
+                  {row.views.toLocaleString()}
+                </TableCell>
+                <TableCell className="text-center">{row.likes}</TableCell>
+                <TableCell className="text-center">{row.bookmarks}</TableCell>
+                <TableCell className="text-center">{row.comments}</TableCell>
+                <TableCell className="text-center">
+                  {row.notifications}
+                </TableCell>
+                <TableCell className="text-center">{row.shares}</TableCell>
                 <TableCell className="text-center">
                   <Button
                     variant="outline"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, Search, Trophy } from "lucide-react";
+import { Eye, Search, Trophy, Activity, CalendarCheck, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -99,34 +99,32 @@ export default function AdminMarathon() {
       {/* 통계 */}
       <dl className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         <div className="bg-white border rounded-lg p-4">
-          <dt className="text-sm text-muted-foreground font-paperlogy">
-            전체 마라톤
-          </dt>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">전체 마라톤</dt>
+            <Trophy className="w-4 h-4 text-brand" aria-hidden="true" />
+          </div>
           <dd className="text-2xl font-semibold font-paperlogy">149</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <dt className="text-sm text-muted-foreground font-paperlogy">
-            진행중
-          </dt>
-          <dd className="text-2xl font-semibold font-paperlogy text-red-600">
-            122
-          </dd>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">진행중</dt>
+            <Activity className="w-4 h-4 text-red-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-red-600">122</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <dt className="text-sm text-muted-foreground font-paperlogy">
-            접수중
-          </dt>
-          <dd className="text-2xl font-semibold font-paperlogy text-blue-600">
-            27
-          </dd>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">접수중</dt>
+            <CalendarCheck className="w-4 h-4 text-blue-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-blue-600">27</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <dt className="text-sm text-muted-foreground font-paperlogy">
-            접수대기
-          </dt>
-          <dd className="text-2xl font-semibold font-paperlogy text-green-600">
-            10
-          </dd>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">접수대기</dt>
+            <Clock className="w-4 h-4 text-green-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-green-600">10</dd>
         </div>
       </dl>
 

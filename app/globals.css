@@ -192,3 +192,8 @@
     @apply underline underline-offset-4;
   }
 }
+
+@keyframes scale-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(0.75); opacity: 0.3; }
+}

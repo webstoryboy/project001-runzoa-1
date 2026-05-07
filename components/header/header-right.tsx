@@ -1,17 +1,27 @@
 "use client";
 
+import type { User } from "@supabase/supabase-js";
+import type { Profile } from "@/lib/types";
 import { Medal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useSheet } from "@/contexts/context-sheet";
 
 import HeaderSheet from "./header-sheet";
 import HeaderUser from "./header-user";
 import HeaderNav from "./header-nav";
 import HeaderInfo from "./header-info";
 
-export default function HeaderRight() {
+interface HeaderRightProps {
+  user: User | null;
+  profile: Profile | null;
+}
+
+export default function HeaderRight({ user, profile }: HeaderRightProps) {
+  const { isOpen, setIsOpen } = useSheet();
+
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -23,9 +33,9 @@ export default function HeaderRight() {
         </Button>
       </SheetTrigger>
       <SheetContent>
-        <HeaderSheet />
-        <HeaderUser />
-        <HeaderNav />
+        <HeaderSheet user={user} />
+        <HeaderUser profile={profile} />
+        <HeaderNav user={user} />
         <HeaderInfo />
       </SheetContent>
     </Sheet>

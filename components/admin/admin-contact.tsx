@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, LucideMessageSquareCode } from "lucide-react";
+import { Eye, LucideMessageSquareCode, Inbox, Clock, RefreshCw, CheckCircle2, Archive } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -22,40 +22,43 @@ export default function AdminContact() {
       </div>
 
       {/* 통계 */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      <dl className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">
-            전체 문의
-          </p>
-          <p className="text-2xl font-semibold font-paperlogy">5</p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">전체 문의</dt>
+            <Inbox className="w-4 h-4 text-brand" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy">5</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">대기중</p>
-          <p className="text-2xl font-semibold font-paperlogy text-red-600">
-            1
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">대기중</dt>
+            <Clock className="w-4 h-4 text-red-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-red-600">1</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">처리중</p>
-          <p className="text-2xl font-semibold font-paperlogy text-yellow-600">
-            1
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">처리중</dt>
+            <RefreshCw className="w-4 h-4 text-yellow-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-yellow-600">1</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">
-            처리완료
-          </p>
-          <p className="text-2xl font-semibold font-paperlogy text-green-600">
-            2
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">처리완료</dt>
+            <CheckCircle2 className="w-4 h-4 text-green-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-green-600">2</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">종료됨</p>
-          <p className="text-2xl font-semibold font-paperlogy text-muted-foreground">
-            3
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">종료됨</dt>
+            <Archive className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-muted-foreground">3</dd>
         </div>
-      </div>
+      </dl>
 
       {/* 테이블 */}
       <div className="bg-white border rounded-lg overflow-hidden font-anyvid">

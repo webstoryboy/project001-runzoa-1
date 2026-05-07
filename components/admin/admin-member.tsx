@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { Eye, Users, UserCheck, UserX, Shield } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -23,36 +23,36 @@ export default function AdminMember() {
       </div>
 
       {/* 통계 */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <dl className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">
-            전체 회원
-          </p>
-          <p className="text-2xl font-semibold font-paperlogy">100</p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">전체 회원</dt>
+            <Users className="w-4 h-4 text-brand" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy">100</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">
-            활성회원
-          </p>
-          <p className="text-2xl font-semibold font-paperlogy text-red-600">
-            53
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">활성회원</dt>
+            <UserCheck className="w-4 h-4 text-red-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-red-600">53</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">
-            탈퇴회원
-          </p>
-          <p className="text-2xl font-semibold font-paperlogy text-yellow-600">
-            1
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">탈퇴회원</dt>
+            <UserX className="w-4 h-4 text-yellow-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-yellow-600">1</dd>
         </div>
         <div className="bg-white border rounded-lg p-4">
-          <p className="text-sm text-muted-foreground font-paperlogy">관리자</p>
-          <p className="text-2xl font-semibold font-paperlogy text-green-600">
-            1
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <dt className="text-sm text-muted-foreground font-paperlogy">관리자</dt>
+            <Shield className="w-4 h-4 text-green-600" aria-hidden="true" />
+          </div>
+          <dd className="text-2xl font-semibold font-paperlogy text-green-600">1</dd>
         </div>
-      </div>
+      </dl>
 
       {/* 테이블 */}
       <div className="bg-white border rounded-lg overflow-hidden font-anyvid">
