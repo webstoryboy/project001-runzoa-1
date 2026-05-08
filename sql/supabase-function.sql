@@ -1,6 +1,6 @@
 -- ============================================
 -- 실행 순서
--- 1. supabase-function.sql  ← 이 파일 (함수 먼저 정의)
+-- 1. supabase-function.sql 
 -- 2. supabase-profiles.sql
 -- 3. supabase-contact.sql
 -- 4. supabase-marathon.sql
@@ -68,31 +68,7 @@ REVOKE EXECUTE ON FUNCTION public.fn_trg_set_updated_at() FROM anon;
 REVOKE EXECUTE ON FUNCTION public.fn_trg_set_updated_at() FROM authenticated;
 
 -- ============================================
--- 3. 회원 탈퇴 (Soft Delete) (RPC)
--- ============================================
-CREATE OR REPLACE FUNCTION public.soft_delete_account()
-RETURNS VOID
-LANGUAGE plpgsql
-SECURITY INVOKER
-SET search_path = public
-AS $$
-BEGIN
-  UPDATE public.profiles
-  SET
-    is_deleted = TRUE,
-    deleted_at = NOW()
-  WHERE id = (select auth.uid())
-    AND is_deleted = FALSE;
-END;
-$$;
-
-REVOKE EXECUTE ON FUNCTION public.soft_delete_account() FROM PUBLIC;
-REVOKE EXECUTE ON FUNCTION public.soft_delete_account() FROM anon;
-GRANT EXECUTE ON FUNCTION public.soft_delete_account() TO authenticated;
-
-
--- ============================================
--- 4. 프로필 이름 중복 확인 (RPC)
+-- 3. 프로필 이름 중복 확인 (RPC)
 -- ============================================
 CREATE OR REPLACE FUNCTION public.is_full_name_available(name_text TEXT)
 RETURNS boolean
@@ -117,7 +93,7 @@ GRANT EXECUTE ON FUNCTION public.is_full_name_available(TEXT) TO authenticated;
 
 
 -- ============================================
--- 5. 계정 탈퇴 여부 체크 (RPC)
+-- 4. 계정 탈퇴 여부 체크 (RPC)
 -- ============================================
 CREATE OR REPLACE FUNCTION public.is_my_account_deleted()
 RETURNS boolean
@@ -143,7 +119,7 @@ GRANT EXECUTE ON FUNCTION public.is_my_account_deleted() TO authenticated;
 
 
 -- ============================================
--- 6. 로그인 시 방문 횟수 증가 (RPC)
+-- 5. 로그인 시 방문 횟수 증가 (RPC)
 -- ============================================
 CREATE OR REPLACE FUNCTION public.increment_visit_count()
 RETURNS VOID
@@ -179,8 +155,7 @@ GRANT EXECUTE ON FUNCTION public.increment_visit_count() TO authenticated;
 -- 2. 업데이트 시 자동 갱신              fn_trg_set_updated_at
 --
 -- [RPC]
--- 3. 회원 탈퇴 (Soft Delete)           soft_delete_account
--- 4. 프로필 이름 중복 확인              is_full_name_available
--- 5. 계정 탈퇴 여부 체크               is_my_account_deleted
--- 6. 로그인 시 방문 횟수 증가           increment_visit_count
--- 7. 마라톤 뷰 카운트 증가              → API Route (service_role)
+-- 3. 프로필 이름 중복 확인              is_full_name_available
+-- 4. 계정 탈퇴 여부 체크               is_my_account_deleted
+-- 5. 로그인 시 방문 횟수 증가           increment_visit_count
+

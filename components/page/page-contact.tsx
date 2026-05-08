@@ -6,59 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { faqs } from "@/lib/data";
+import { contactTypes, faqs, type ContactType } from "@/lib/data";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import {
-  ChevronRight,
-  ChevronDown,
-  AlertCircle,
-  MessageSquare,
-  FilePen,
-} from "lucide-react";
-
-export type ContactType = "complaint" | "inquiry" | "correction";
-
-const contactTypes = [
-  {
-    type: "complaint" as ContactType,
-    label: "불편신고",
-    icon: AlertCircle,
-    badgeText: "이거 불편해요! 개선해주세요!",
-    heading: "불편한 점을 편하게 남겨주세요",
-    imageSrc: "/face/face05.webp",
-    imageAlt: "불편신고 안내 이미지",
-    description:
-      "서비스 이용 중 불편하셨던 점을 알려주세요. 더 나은 서비스를 위해 소중한 의견을 빠르게 반영하겠습니다.",
-    placeholder: "불편했던 점이나 개선이 필요한 상황을 구체적으로 적어주세요.",
-    buttonLabel: "불편신고",
-  },
-  {
-    type: "inquiry" as ContactType,
-    label: "문의사항",
-    icon: MessageSquare,
-    badgeText: "궁금한 점이 있나요? 무엇이든 물어보세요!",
-    heading: "궁금한 내용을 남겨주세요",
-    imageSrc: "/face/face06.webp",
-    imageAlt: "문의사항 안내 이미지",
-    description:
-      "서비스 이용 중 궁금한 점이나 개선 아이디어 등 다양한 의견을 언제든 편하게 남겨주세요.",
-    placeholder: "문의 내용을 자세히 적어주세요.",
-    buttonLabel: "문의하기",
-  },
-  {
-    type: "correction" as ContactType,
-    label: "수정요청",
-    icon: FilePen,
-    badgeText: "정보가 다르면 알려주세요! 바로 확인할게요!",
-    heading: "수정이 필요한 내용을 남겨주세요",
-    imageSrc: "/face/face07.webp",
-    imageAlt: "수정요청 안내 이미지",
-    description:
-      "대회 정보가 잘못되었거나 업데이트가 필요한 경우 수정 요청을 남겨주세요. 확인 후 신속히 반영하겠습니다.",
-    placeholder: "수정이 필요한 대회명과 올바른 내용을 함께 알려주세요.",
-    buttonLabel: "수정요청",
-  },
-];
+import { ChevronRight, ChevronDown } from "lucide-react";
 
 export default function PageContact({
   initialType = "inquiry",
@@ -136,7 +86,7 @@ export default function PageContact({
             </div>
 
             {/* 헤더 */}
-            <div className="mb-5 flex items-center gap-3">
+            <div className="mb-5 flex items-center gap-3 border-b border-dashed pb-5">
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                 <Image
                   src={current.imageSrc}
@@ -158,11 +108,6 @@ export default function PageContact({
                 </h2>
               </div>
             </div>
-
-            {/* 설명 */}
-            <p className="mb-6 border-t border-b border-dashed py-5 font-anyvid text-sm leading-relaxed text-muted-foreground">
-              {current.description}
-            </p>
 
             <p className="sr-only" id="required-note">
               * 표시는 필수 입력 항목입니다.

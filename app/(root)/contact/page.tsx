@@ -1,5 +1,6 @@
 import { APP_NAME, APP_ENG_NAME } from "@/lib/constants";
-import PageContact, { type ContactType } from "@/components/page/page-contact";
+import { type ContactType } from "@/lib/data";
+import PageContact from "@/components/page/page-contact";
 import PageTitle from "@/components/page/page-title";
 
 const isContactType = (value: string): value is ContactType => {

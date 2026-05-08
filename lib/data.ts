@@ -7,6 +7,9 @@ import {
   Trophy,
   ClipboardList,
   Users,
+  AlertCircle,
+  MessageSquare,
+  FilePen,
   type LucideIcon,
 } from "lucide-react";
 
@@ -37,6 +40,20 @@ export interface FaqsItem {
   title: string;
   content: string;
   category: "이용" | "결제" | "기술";
+}
+
+export type ContactType = "complaint" | "inquiry" | "correction";
+
+export interface ContactItem {
+  type: ContactType;
+  label: string;
+  icon: LucideIcon;
+  badgeText: string;
+  heading: string;
+  imageSrc: string;
+  imageAlt: string;
+  placeholder: string;
+  buttonLabel: string;
 }
 
 export const features: FeatureItem[] = [
@@ -213,6 +230,42 @@ export const faqs: FaqsItem[] = [
     content:
       "네. 마음에 드는 대회를 즐겨찾기에 저장해두고, 나중에 한 번에 모아볼 수 있습니다. 로그인 후에는 저장한 목록을 다양한 기준으로 정리하고 빠르게 확인할 수 있어요.",
     category: "기술",
+  },
+];
+
+export const contactTypes: ContactItem[] = [
+  {
+    type: "complaint",
+    label: "불편신고",
+    icon: AlertCircle,
+    badgeText: "이거 불편해요! 개선해주세요!",
+    heading: "불편한 점을 편하게 남겨주세요",
+    imageSrc: "/face/face05.webp",
+    imageAlt: "불편신고 안내 이미지",
+    placeholder: "불편했던 점이나 개선이 필요한 상황을 구체적으로 적어주세요.",
+    buttonLabel: "불편신고",
+  },
+  {
+    type: "inquiry",
+    label: "문의사항",
+    icon: MessageSquare,
+    badgeText: "궁금한 점이 있나요? 무엇이든 물어보세요!",
+    heading: "궁금한 내용을 남겨주세요",
+    imageSrc: "/face/face06.webp",
+    imageAlt: "문의사항 안내 이미지",
+    placeholder: "문의 내용을 자세히 적어주세요.",
+    buttonLabel: "문의하기",
+  },
+  {
+    type: "correction",
+    label: "수정요청",
+    icon: FilePen,
+    badgeText: "정보가 다르면 알려주세요! 바로 확인할게요!",
+    heading: "수정이 필요한 내용을 남겨주세요",
+    imageSrc: "/face/face07.webp",
+    imageAlt: "수정요청 안내 이미지",
+    placeholder: "수정이 필요한 대회명과 올바른 내용을 함께 알려주세요.",
+    buttonLabel: "수정요청",
   },
 ];
 

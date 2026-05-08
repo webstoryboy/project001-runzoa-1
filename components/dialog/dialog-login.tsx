@@ -25,7 +25,7 @@ export default function DialogLogin({ open, onOpenChange }: DialogLoginProps) {
           <div className="flex flex-col items-center gap-3">
             <div className="flex items-center justify-center">
               <div className="flex items-center gap-2 font-paperlogy uppercase font-extrabold text-brand text-xl">
-                <TentTree className="size-8" />
+                <TentTree aria-hidden="true" className="size-8" />
                 {APP_ENG_NAME}
               </div>
             </div>

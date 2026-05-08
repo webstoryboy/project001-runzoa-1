@@ -1,12 +1,10 @@
 "use client";
 
 import type { User } from "@supabase/supabase-js";
-import { createClient } from "@/lib/supabase/client";
-import { toast } from "sonner";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useLogout } from "@/contexts/context-logout";
 import { APP_NAME } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import { useLogin } from "@/contexts/context-login";
 import { useSheet } from "@/contexts/context-sheet";
 import {
   SheetDescription,
@@ -14,23 +12,18 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-import DialogLogin from "@/components/dialog/dialog-login";
-
 interface HeaderSheetProps {
   user: User | null;
 }
 
 export default function HeaderSheet({ user }: HeaderSheetProps) {
-  const [loginOpen, setLoginOpen] = useState(false);
+  const { openLogin } = useLogin();
   const { setIsOpen } = useSheet();
-  const router = useRouter();
+  const { logout } = useLogout();
 
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
     setIsOpen(false);
-    toast.success("로그아웃되었습니다.");
-    router.refresh();
+    await logout();
   };
 
   return (
@@ -51,7 +44,7 @@ export default function HeaderSheet({ user }: HeaderSheetProps) {
             <Button
               size="sm"
               variant="destructive"
-              onClick={() => setLoginOpen(true)}
+              onClick={openLogin}
               className="text-[12px] rounded-full px-2.5 font-paperlogy h-6"
             >
               로그인
@@ -62,8 +55,6 @@ export default function HeaderSheet({ user }: HeaderSheetProps) {
           메뉴 및 사용자 정보를 확인할 수 있습니다.
         </SheetDescription>
       </SheetHeader>
-
-      <DialogLogin open={loginOpen} onOpenChange={setLoginOpen} />
     </>
   );
 }

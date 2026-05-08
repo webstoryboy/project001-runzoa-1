@@ -1,6 +1,13 @@
+"use client";
+
 import Image from "next/image";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useLogout } from "@/contexts/context-logout";
+import type { FullProfile } from "@/lib/types";
+import { formatProfileDate, getProfileRoleLabel } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   Calendar,
   Camera,
@@ -13,16 +20,33 @@ import {
   UserIcon,
 } from "lucide-react";
 
-export default function PageProfile() {
+import DialogProfileName from "@/components/dialog/dialog-profile-name";
+import DialogProfileImage from "@/components/dialog/dialog-profile-image";
+import DialogProfileDelete from "@/components/dialog/dialog-profile-delete";
+
+interface PageProfileProps {
+  profile: FullProfile | null;
+}
+
+export default function PageProfile({ profile }: PageProfileProps) {
+  const router = useRouter();
+  const { logout } = useLogout();
+  const [nameOpen, setNameOpen] = useState(false);
+  const [imageOpen, setImageOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [fullName, setFullName] = useState(profile?.full_name ?? null);
+  const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url ?? null);
+
   return (
     <div className="contact__container">
       <div className="flex flex-col items-center justify-center gap-2 mb-6">
         <button
           type="button"
+          onClick={() => setImageOpen(true)}
           className="relative w-20 h-20 rounded-full bg-green-100 flex items-center justify-center overflow-hidden cursor-pointer group"
         >
           <Image
-            src="/face/face05.webp"
+            src={avatarUrl ?? "/face/face01.webp"}
             alt="프로필"
             width={80}
             height={80}
@@ -37,11 +61,11 @@ export default function PageProfile() {
         </button>
 
         <div className="font-paperlogy text-base md:text-xl text-gray-900 flex items-center gap-2">
-          런조아
+          {fullName ?? "이름 없음"}
           <Button
-            type="button"
             variant="ghost"
             size="sm"
+            onClick={() => setNameOpen(true)}
             className="h-7 w-7 rounded-full p-0 bg-gray-100 hover:bg-gray-200"
           >
             <Pencil />
@@ -60,7 +84,9 @@ export default function PageProfile() {
             <p className="text-sm text-muted-foreground font-anyvid mb-1">
               이름
             </p>
-            <p className="text-sm font-anyvid text-foreground">런조아</p>
+            <p className="text-sm font-anyvid text-foreground">
+              {fullName ?? "-"}
+            </p>
           </div>
         </div>
 
@@ -75,7 +101,7 @@ export default function PageProfile() {
               이메일
             </p>
             <p className="text-sm font-anyvid text-foreground break-all">
-              runzoa@runzoa.com
+              {profile?.email ?? "-"}
             </p>
           </div>
         </div>
@@ -90,7 +116,9 @@ export default function PageProfile() {
             <p className="text-sm text-muted-foreground font-anyvid mb-1">
               역할
             </p>
-            <p className="text-sm font-anyvid text-foreground">관리자</p>
+            <p className="text-sm font-anyvid text-foreground">
+              {getProfileRoleLabel(profile?.role ?? null)}
+            </p>
           </div>
         </div>
 
@@ -104,8 +132,8 @@ export default function PageProfile() {
             <p className="text-sm text-muted-foreground font-anyvid mb-1">
               가입일
             </p>
-            <p className="text-sm font-anyvid text-foreground inline-flex items-center gap-1.5">
-              2026년 1월 1일
+            <p className="text-sm font-anyvid text-foreground">
+              {formatProfileDate(profile?.created_at ?? null)}
             </p>
           </div>
         </div>
@@ -120,7 +148,9 @@ export default function PageProfile() {
             <p className="text-sm text-muted-foreground font-anyvid mb-1">
               방문횟수
             </p>
-            <p className="text-sm font-anyvid text-foreground">3회</p>
+            <p className="text-sm font-anyvid text-foreground">
+              {profile?.visit_count != null ? `${profile.visit_count}회` : "-"}
+            </p>
           </div>
         </div>
 
@@ -128,16 +158,18 @@ export default function PageProfile() {
 
         <div className="md:pt-2 flex gap-2 justify-center">
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
+            onClick={logout}
             className="text-sm font-normal text-muted-foreground hover:bg-green-50 hover:border-green-600 hover:text-green-700 font-anyvid transition-colors flex items-center gap-1"
           >
             <LogOut className="w-4 h-4" />
             로그아웃
           </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
+            onClick={() => setDeleteOpen(true)}
             className="text-sm font-normal text-muted-foreground hover:bg-red-50 hover:border-red-300 hover:text-red-600 font-anyvid transition-colors flex items-center gap-1"
           >
             <Trash2 className="w-4 h-4" />
@@ -145,6 +177,26 @@ export default function PageProfile() {
           </Button>
         </div>
       </div>
+
+      <DialogProfileName
+        open={nameOpen}
+        onOpenChange={setNameOpen}
+        currentName={fullName}
+        onUpdated={(newName) => {
+          setFullName(newName);
+          router.refresh();
+        }}
+      />
+      <DialogProfileImage
+        open={imageOpen}
+        onOpenChange={setImageOpen}
+        currentImage={avatarUrl}
+        onUpdated={(newUrl) => {
+          setAvatarUrl(newUrl);
+          router.refresh();
+        }}
+      />
+      <DialogProfileDelete open={deleteOpen} onOpenChange={setDeleteOpen} />
     </div>
   );
 }

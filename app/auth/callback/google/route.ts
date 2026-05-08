@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -19,24 +20,22 @@ export async function GET(request: NextRequest) {
     const userId = data?.user?.id;
 
     if (!error && userId) {
-      // 1. 탈퇴한 계정인지 확인
-      const { data: isDeleted } = await supabase.rpc("is_my_account_deleted");
-      if (isDeleted === true) {
-        await supabase.auth.signOut();
-        const url = new URL("/", baseUrl);
-        url.searchParams.set("error", "deleted_account");
-        return NextResponse.redirect(url);
-      }
-
-      // 2. 첫 로그인 여부 확인 (visit_count === 0이면 첫 방문)
-      const { data: profile } = await supabase
+      // 1. 탈퇴한 계정인지 확인 (supabaseAdmin으로 RLS 우회)
+      const { data: profile } = await supabaseAdmin
         .from("profiles")
-        .select("visit_count")
+        .select("is_deleted, visit_count")
         .eq("id", userId)
         .single();
+
+      if (profile?.is_deleted === true) {
+        await supabase.auth.signOut();
+        const url = new URL("/", baseUrl);
+        url.searchParams.set("error", "deleted");
+        return NextResponse.redirect(url);
+      }
       const isFirstLogin = profile?.visit_count === 0;
 
-      // 3. 방문 횟수 증가
+      // 2. 방문 횟수 증가
       try {
         await supabase.rpc("increment_visit_count");
       } catch (rpcError) {
@@ -45,12 +44,12 @@ export async function GET(request: NextRequest) {
 
       // 4. 로그인 성공 리다이렉트
       const url = new URL(next, baseUrl);
-      url.searchParams.set("login", isFirstLogin ? "first" : "success");
+      url.searchParams.set("login", isFirstLogin ? "welcome" : "success");
       return NextResponse.redirect(url);
     }
   }
 
   const failUrl = new URL("/", baseUrl);
-  failUrl.searchParams.set("error", "error_code");
+  failUrl.searchParams.set("error", "error");
   return NextResponse.redirect(failUrl);
 }
