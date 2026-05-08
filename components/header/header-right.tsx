@@ -14,7 +14,7 @@ import HeaderInfo from "./header-info";
 
 interface HeaderRightProps {
   user: User | null;
-  profile: Profile | null;
+  profile: Partial<Profile> | null;
 }
 
 export default function HeaderRight({ user, profile }: HeaderRightProps) {

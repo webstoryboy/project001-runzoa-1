@@ -42,10 +42,8 @@ export interface FaqsItem {
   category: "이용" | "결제" | "기술";
 }
 
-export type ContactType = "complaint" | "inquiry" | "correction";
-
 export interface ContactItem {
-  type: ContactType;
+  type: "complaint" | "inquiry" | "correction";
   label: string;
   icon: LucideIcon;
   badgeText: string;
@@ -56,6 +54,8 @@ export interface ContactItem {
   buttonLabel: string;
 }
 
+
+// 주요기능 (about)
 export const features: FeatureItem[] = [
   {
     icon: MapPin,
@@ -108,6 +108,7 @@ export const features: FeatureItem[] = [
   },
 ];
 
+// 공지사항 (notice)
 export const notices: NoticesItem[] = [
   {
     id: 1,
@@ -159,6 +160,7 @@ export const notices: NoticesItem[] = [
   },
 ];
 
+// 변경내역 (about)
 export const changelog: ChangelogItem[] = [
   {
     version: "v1.0.0",
@@ -195,6 +197,7 @@ export const changelog: ChangelogItem[] = [
   },
 ];
 
+// 문의하기 (contact)
 export const faqs: FaqsItem[] = [
   {
     id: 1,
@@ -233,7 +236,8 @@ export const faqs: FaqsItem[] = [
   },
 ];
 
-export const contactTypes: ContactItem[] = [
+// 문의하기 유형 (contact)
+export const contacts: ContactItem[] = [
   {
     type: "complaint",
     label: "불편신고",
@@ -250,7 +254,7 @@ export const contactTypes: ContactItem[] = [
     label: "문의사항",
     icon: MessageSquare,
     badgeText: "궁금한 점이 있나요? 무엇이든 물어보세요!",
-    heading: "궁금한 내용을 남겨주세요",
+    heading: "궁금한 내용을 남겨주세요!",
     imageSrc: "/face/face06.webp",
     imageAlt: "문의사항 안내 이미지",
     placeholder: "문의 내용을 자세히 적어주세요.",
@@ -269,6 +273,7 @@ export const contactTypes: ContactItem[] = [
   },
 ];
 
+// 상세페이지 주의사항 (detail)
 export const precautions = [
   "대회 상세 일정, 코스, 참가비, 접수 일정 등은 주최 측 사정에 따라 변경될 수 있으니 반드시 공식 홈페이지에서 최종 정보를 확인하세요.",
   "본 사이트(RunZoa)는 마라톤 정보를 모아 제공하는 안내/중개 플랫폼으로, 대회 운영 및 접수 과정에 직접 관여하지 않습니다.",

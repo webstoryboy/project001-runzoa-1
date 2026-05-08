@@ -1,21 +1,23 @@
-// 헤더용 (간소화)
+import { z } from "zod";
+import { profileNameSchema, contactSchema } from "@/lib/validations";
+
+// 프로필 타입
 export interface Profile {
-  full_name: string | null;
-  avatar_url: string | null;
-  email: string | null;
-}
-
-// 프로필 페이지용 (전체)
-export interface FullProfile {
-  full_name: string | null;
-  avatar_url: string | null;
-  email: string | null;
-  role: string | null;
-  visit_count: number | null;
-  created_at: string | null;
-}
-
-// 이름 변경 폼
-export interface ProfileNameFormValues {
+  id: string;
+  email: string;
   full_name: string;
+  avatar_url: string;
+  signup_provider: string;
+  role: string;
+  visit_count: number;
+  is_deleted: boolean;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
 }
+
+// 프로필 이름 변경 폼 타입
+export type ProfileNameFormValues = z.infer<typeof profileNameSchema>;
+
+// 문의하기 폼 타입 (contact)
+export type ContactFormValues = z.infer<typeof contactSchema>;

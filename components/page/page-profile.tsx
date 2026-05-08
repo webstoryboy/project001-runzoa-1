@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLogout } from "@/contexts/context-logout";
-import type { FullProfile } from "@/lib/types";
+import type { Profile } from "@/lib/types";
 import { formatProfileDate, getProfileRoleLabel } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -25,7 +25,7 @@ import DialogProfileImage from "@/components/dialog/dialog-profile-image";
 import DialogProfileDelete from "@/components/dialog/dialog-profile-delete";
 
 interface PageProfileProps {
-  profile: FullProfile | null;
+  profile: Profile | null;
 }
 
 export default function PageProfile({ profile }: PageProfileProps) {

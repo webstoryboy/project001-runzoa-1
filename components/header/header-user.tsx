@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Profile } from "@/lib/types";
 
 interface HeaderUserProps {
-  profile: Profile | null;
+  profile: Partial<Profile> | null;
 }
 
 export default function HeaderUser({ profile }: HeaderUserProps) {
