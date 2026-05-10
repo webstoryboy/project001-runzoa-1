@@ -7,6 +7,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LoginProvider } from "@/contexts/context-login";
 import { SheetProvider } from "@/contexts/context-sheet";
 import { LogoutProvider } from "@/contexts/context-logout";
+import { MarathonsProvider } from "@/contexts/context-marathons";
+import { fetchAllMarathons } from "@/lib/marathons";
 import {
   APP_DESCRIPTION,
   APP_KEYWORDS,
@@ -116,37 +118,55 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const marathons = await fetchAllMarathons();
+
   return (
     <html lang="ko">
       <body
         className={`${anyvid.variable} ${nanumSquare.variable} ${paperlogy.variable}`}
       >
-        <TooltipProvider>
-          <LoginProvider>
-            <SheetProvider>
-              <LogoutProvider>
-              {children}
-              <Suspense>
-                <AuthAlert />
-              </Suspense>
-              <Toaster
-                position="top-center"
-                toastOptions={{
-                  classNames: {
-                    title: "font-anyvid",
-                    description: "font-anyvid",
-                  },
-                }}
-              />
-              </LogoutProvider>
-            </SheetProvider>
-          </LoginProvider>
-        </TooltipProvider>
+        <div id="splash" role="status" aria-label="로딩 중" aria-live="polite">
+          <img
+            src="/icons/favicon.svg"
+            alt=""
+            width={72}
+            height={78}
+            loading="eager"
+            className="splash__logo"
+          />
+          <span className="splash__name font-paperlogy">{APP_NAME}</span>
+          <span className="splash__slogan font-anyvid text-muted-foreground">
+            {APP_SLOGAN}
+          </span>
+        </div>
+        <MarathonsProvider initialMarathons={marathons}>
+          <TooltipProvider>
+            <LoginProvider>
+              <SheetProvider>
+                <LogoutProvider>
+                  {children}
+                  <Suspense>
+                    <AuthAlert />
+                  </Suspense>
+                  <Toaster
+                    position="top-center"
+                    toastOptions={{
+                      classNames: {
+                        title: "font-anyvid",
+                        description: "font-anyvid",
+                      },
+                    }}
+                  />
+                </LogoutProvider>
+              </SheetProvider>
+            </LoginProvider>
+          </TooltipProvider>
+        </MarathonsProvider>
       </body>
     </html>
   );

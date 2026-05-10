@@ -1,152 +1,62 @@
+"use client";
+
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { useMarathons } from "@/contexts/context-marathons";
+import { getMarathonStatusVariant, formatMarathonDateShort } from "@/lib/utils";
+import type { Marathon } from "@/lib/types";
 import {
   ChevronRight,
   Shuffle,
   ClipboardCheck,
   CalendarDays,
+  Ghost,
 } from "lucide-react";
 
-const similarEvents = [
-  {
-    id: 1,
-    name: "2026 HYROX Seoul",
-    date: "05/10",
-    region: "서울",
-    badge: "접수중",
-    badgeColor: "destructive",
-  },
-  {
-    id: 2,
-    name: "2026 춘천 마라톤",
-    date: "05/18",
-    region: "강원",
-    badge: "D-14",
-    badgeColor: "destructive",
-  },
-  {
-    id: 3,
-    name: "제15회 대구 국제 마라톤",
-    date: "05/24",
-    region: "대구",
-    badge: "접수전",
-    badgeColor: "outline",
-  },
-  {
-    id: 4,
-    name: "2026 코리아 정글 트레일",
-    date: "05/30",
-    region: "경남",
-    badge: "접수마감",
-    badgeColor: "secondary",
-  },
-];
+function EventList({ items }: { items: Marathon[] }) {
+  if (items.length === 0) {
+    return (
+      <div className="px-4 py-8 text-center font-anyvid text-sm text-muted-foreground border border-dashed rounded m-4 md:m-6">
+        <Ghost
+          className="w-10 h-10 text-brand/20 mx-auto mb-2"
+          aria-hidden="true"
+        />
+        해당하는 대회가 없습니다.
+      </div>
+    );
+  }
 
-const openEvents = [
-  {
-    id: 1,
-    name: "2026 서울 마라톤",
-    date: "05/09",
-    region: "서울",
-    badge: "D-5",
-    badgeColor: "destructive",
-  },
-  {
-    id: 2,
-    name: "2026 세이브더칠드런 마라톤",
-    date: "05/11",
-    region: "경남",
-    badge: "D-7",
-    badgeColor: "destructive",
-  },
-  {
-    id: 3,
-    name: "2026 인천 하프 마라톤",
-    date: "05/17",
-    region: "인천",
-    badge: "D-13",
-    badgeColor: "destructive",
-  },
-  {
-    id: 4,
-    name: "2026 제주 국제 마라톤",
-    date: "05/22",
-    region: "제주",
-    badge: "D-18",
-    badgeColor: "destructive",
-  },
-];
-
-const monthlyEvents = [
-  {
-    id: 1,
-    name: "2026 광주 국제 마라톤",
-    date: "05/03",
-    region: "광주",
-    badge: "D-1",
-    badgeColor: "destructive",
-  },
-  {
-    id: 2,
-    name: "2026 부산 하프 마라톤",
-    date: "05/16",
-    region: "부산",
-    badge: "D-12",
-    badgeColor: "destructive",
-  },
-  {
-    id: 3,
-    name: "제10회 세종 마라톤",
-    date: "05/23",
-    region: "세종",
-    badge: "접수전",
-    badgeColor: "outline",
-  },
-  {
-    id: 4,
-    name: "2026 울산 마라톤",
-    date: "05/31",
-    region: "울산",
-    badge: "접수전",
-    badgeColor: "outline",
-  },
-];
-
-interface EventItem {
-  id: number;
-  name: string;
-  date: string;
-  region: string;
-  badge: string;
-  badgeColor: string;
-}
-
-function EventList({ events, label }: { events: EventItem[]; label: string }) {
   return (
-    <ul className="divide-y divide-gray-50" aria-label={label}>
-      {events.map((event) => (
-        <li key={event.id}>
+    <ul
+      className={`divide-y divide-gray-50${items.length > 4 ? " max-h-[245px] overflow-y-auto" : ""}`}
+    >
+      {items.map((item) => (
+        <li key={item.id}>
           <Link
-            href="/"
+            href={`/marathon/${item.slug}`}
             className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-gray-50"
-            aria-label={`${event.name} ${event.date} ${event.region} ${event.badge}`}
+            aria-label={`${item.name} ${formatMarathonDateShort(item.event_start_at)} ${item.location_region ?? ""} ${item.registration_status}`}
           >
             <Badge
-              variant="outline"
-              className="w-14 shrink-0 justify-center font-anyvid text-xs"
+              variant={getMarathonStatusVariant(item.registration_status)}
+              className="w-16 shrink-0 justify-center font-anyvid text-xs"
               aria-hidden="true"
             >
-              {event.badge}
+              {item.registration_status}
             </Badge>
             <div className="min-w-0 flex-1">
               <p className="truncate font-anyvid text-sm font-medium group-hover:text-brand">
-                {event.name}
+                {item.name}
               </p>
               <p className="font-anyvid text-xs text-muted-foreground">
-                {event.date} · {event.region}
+                {formatMarathonDateShort(item.event_start_at)}
+                {item.location_region && ` · ${item.location_region}`}
               </p>
             </div>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0 text-gray-300 group-hover:text-brand" aria-hidden="true" />
+            <ChevronRight
+              className="h-3.5 w-3.5 shrink-0 text-gray-300 group-hover:text-brand"
+              aria-hidden="true"
+            />
           </Link>
         </li>
       ))}
@@ -154,40 +64,96 @@ function EventList({ events, label }: { events: EventItem[]; label: string }) {
   );
 }
 
-export default function DetailRelated() {
+export default function DetailRelated({ marathon }: { marathon: Marathon }) {
+  const marathons = useMarathons();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const isUpcoming = (m: Marathon) => {
+    if (!m.event_start_at) return true;
+    return new Date(m.event_start_at) >= today;
+  };
+
+  const sortByDate = (a: Marathon, b: Marathon) => {
+    if (!a.event_start_at && !b.event_start_at) return 0;
+    if (!a.event_start_at) return 1;
+    if (!b.event_start_at) return -1;
+    return (
+      new Date(a.event_start_at).getTime() -
+      new Date(b.event_start_at).getTime()
+    );
+  };
+
+  const international = marathons
+    .filter(
+      (m) =>
+        m.location_country &&
+        m.location_country !== "대한민국" &&
+        isUpcoming(m),
+    )
+    .sort(sortByDate)
+    .slice(0, 10);
+
+  const openRegistration = marathons
+    .filter(
+      (m) =>
+        m.slug !== marathon.slug &&
+        (m.registration_status === "접수중" ||
+          m.registration_status === "추가접수"),
+    )
+    .sort(sortByDate)
+    .slice(0, 10);
+
+  const sameRegion = marathons
+    .filter(
+      (m) =>
+        m.slug !== marathon.slug &&
+        m.location_region === marathon.location_region &&
+        isUpcoming(m),
+    )
+    .sort(sortByDate)
+    .slice(0, 10);
+
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-      {/* 비슷한 대회 */}
+      {/* 해외 마라톤 대회 */}
       <div className="detail__box">
         <div className="detail__title">
           <Shuffle className="h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
-          <h3 className="font-paperlogy font-semibold text-lg">
+          <h2 className="font-paperlogy font-semibold text-lg">
             해외 마라톤 대회
-          </h3>
+          </h2>
         </div>
-        <EventList events={similarEvents} label="해외 마라톤 대회 목록" />
+        <EventList items={international} />
       </div>
 
       {/* 접수 중인 대회 */}
       <div className="detail__box">
         <div className="detail__title">
-          <ClipboardCheck className="h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
-          <h3 className="font-paperlogy font-semibold text-lg">
+          <ClipboardCheck
+            className="h-5 w-5 shrink-0 text-brand"
+            aria-hidden="true"
+          />
+          <h2 className="font-paperlogy font-semibold text-lg">
             접수 중인 대회
-          </h3>
+          </h2>
         </div>
-        <EventList events={openEvents} label="접수 중인 대회 목록" />
+        <EventList items={openRegistration} />
       </div>
 
-      {/* 이달의 대회 */}
+      {/* 같은 지역 대회 */}
       <div className="detail__box">
         <div className="detail__title">
-          <CalendarDays className="h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
-          <h3 className="font-paperlogy font-semibold text-lg">
+          <CalendarDays
+            className="h-5 w-5 shrink-0 text-brand"
+            aria-hidden="true"
+          />
+          <h2 className="font-paperlogy font-semibold text-lg">
             같은 지역 대회
-          </h3>
+          </h2>
         </div>
-        <EventList events={monthlyEvents} label="같은 지역 대회 목록" />
+        <EventList items={sameRegion} />
       </div>
     </div>
   );

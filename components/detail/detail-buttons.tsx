@@ -1,8 +1,13 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ExternalLink } from "lucide-react";
+import { APP_EVENTZOA_URL, APP_KCALZOA_URL } from "@/lib/constants";
 
-export default function DetailButtons() {
+interface DetailButtonsProps {
+  event_site: string | null;
+}
+
+export default function DetailButtons({ event_site }: DetailButtonsProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div>
@@ -12,7 +17,7 @@ export default function DetailButtons() {
           asChild
         >
           <Link
-            href="/"
+            href={APP_KCALZOA_URL}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="칼로리 사이트 바로가기 (새 탭에서 열림)"
@@ -29,7 +34,7 @@ export default function DetailButtons() {
           asChild
         >
           <Link
-            href="/"
+            href={APP_EVENTZOA_URL}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="이벤트 사이트 바로가기 (새 탭에서 열림)"
@@ -39,23 +44,25 @@ export default function DetailButtons() {
           </Link>
         </Button>
       </div>
-      <div>
-        <Button
-          variant="destructive"
-          className="h-11 w-full gap-2 rounded-full"
-          asChild
-        >
-          <Link
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="공식 사이트 바로가기 (새 탭에서 열림)"
+      {event_site && (
+        <div>
+          <Button
+            variant="destructive"
+            className="h-11 w-full gap-2 rounded-full"
+            asChild
           >
-            <ExternalLink className="h-4 w-4" aria-hidden="true" />
-            공식 사이트 바로가기
-          </Link>
-        </Button>
-      </div>
+            <Link
+              href={event_site}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="공식 사이트 바로가기 (새 탭에서 열림)"
+            >
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              공식 사이트 바로가기
+            </Link>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

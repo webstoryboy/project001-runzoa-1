@@ -26,6 +26,11 @@ import {
   Dessert,
   Medal,
   LocateFixed,
+  Castle,
+  PocketKnife,
+  ClipboardList,
+  CalendarDays,
+  Panda,
 } from "lucide-react";
 
 export interface MenuItem {
@@ -70,6 +75,15 @@ export const footerMenu: MenuItem[] = [
   { icon: Cctv, label: "수정요청", href: "/contact?type=correction" },
   { icon: Compass, label: "이용약관", href: "/terms" },
   { icon: Drama, label: "개인정보취급방침", href: "/privacy" },
+];
+
+// 모바일 메뉴
+export const mobileMenu: MenuItem[] = [
+  { icon: Castle, label: "홈", href: "/" },
+  { icon: ClipboardList, label: "테이블", href: "/?view=table" },
+  { icon: CalendarDays, label: "달력", href: "/?view=calendar" },
+  { icon: Panda, label: "즐겨찾기", href: "/favorites" },
+  { icon: PocketKnife, label: "더보기", href: "#more" },
 ];
 
 // 관리자 메뉴

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { Marathon } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -9,9 +11,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye } from "lucide-react";
+import {
+  formatMarathonDate,
+  formatMarathonDatetime,
+  getMarathonDDay,
+  getMarathonDDayVariant,
+  getMarathonStatusVariant,
+} from "@/lib/utils";
 
-export default function MarathonListTable() {
+import MarathonNoData from "./marathon-no-data";
+
+export default function MarathonListTable({
+  marathons,
+}: {
+  marathons: Marathon[];
+}) {
+  if (marathons.length === 0) {
+    return <MarathonNoData />;
+  }
+
   return (
     <div className="marathon__list__table">
       <div className="bg-white border rounded-lg overflow-hidden font-anyvid">
@@ -29,141 +47,65 @@ export default function MarathonListTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="text-center">1</TableCell>
-              <TableCell>
-                <Badge variant="destructive">D-Day</Badge>
-              </TableCell>
-              <TableCell>2026년 3월 30일(수)</TableCell>
-              <TableCell>서울</TableCell>
-              <TableCell>
-                <Link
-                  href="/"
-                  className="hover:underline underline-offset-4 truncate block max-w-xs"
-                >
-                  2026 서울 마라톤
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Badge variant="destructive">접수중</Badge>
-              </TableCell>
-              <TableCell>2025년 3월 1일(금)</TableCell>
-              <TableCell className="text-center">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="w-8 h-8 rounded hover:bg-brand/8 hover:text-brand hover:border-brand/20"
-                  aria-label="2026 서울 마라톤 자세히 보기"
-                  asChild
-                >
-                  <Link href="/">
-                    <Eye className="h-3 w-3" aria-hidden="true" />
-                  </Link>
-                </Button>
-              </TableCell>
-            </TableRow>
+            {marathons.map((marathon, index) => {
+              const dday = getMarathonDDay(marathon.event_start_at);
+              const detailHref = `/marathon/${marathon.slug}`;
 
-            <TableRow className="hover:bg-gray-50 text-muted-foreground">
-              <TableCell className="text-center">2</TableCell>
-              <TableCell>
-                <Badge variant="destructive">D-11</Badge>
-              </TableCell>
-              <TableCell>2026년 5월 30일(월)</TableCell>
-              <TableCell>경남</TableCell>
-              <TableCell>
-                <Link
-                  href="/"
-                  className="hover:underline underline-offset-4 truncate block max-w-xs"
+              return (
+                <TableRow
+                  key={marathon.id}
+                  className="hover:bg-gray-50 text-muted-foreground"
                 >
-                  2026 코리아 정글 트레일
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Badge variant="ghost">접수마감</Badge>
-              </TableCell>
-              <TableCell>2025년 3월 1일(금)</TableCell>
-              <TableCell className="text-center">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="w-8 h-8 rounded hover:bg-brand/8 hover:text-brand hover:border-brand/20"
-                  aria-label="2026 코리아 정글 트레일 자세히 보기"
-                  asChild
-                >
-                  <Link href="/">
-                    <Eye className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-              </TableCell>
-            </TableRow>
-
-            <TableRow className="hover:bg-gray-50 text-muted-foreground">
-              <TableCell className="text-center">3</TableCell>
-              <TableCell>
-                <Badge variant="destructive">D-10</Badge>
-              </TableCell>
-              <TableCell>2026년 5월 27일(월)</TableCell>
-              <TableCell>경남</TableCell>
-              <TableCell>
-                <Link
-                  href="/"
-                  className="hover:underline underline-offset-4 truncate block max-w-xs"
-                >
-                  2026 세븐 브릿지 투어
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Badge variant="ghost">접수미정</Badge>
-              </TableCell>
-              <TableCell>2025년 3월 11일(금)</TableCell>
-              <TableCell className="text-center">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="w-8 h-8 rounded hover:bg-brand/8 hover:text-brand hover:border-brand/20"
-                  aria-label="2026 세븐 브릿지 투어 자세히 보기"
-                  asChild
-                >
-                  <Link href="/">
-                    <Eye className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-              </TableCell>
-            </TableRow>
-
-            <TableRow className="hover:bg-gray-50 text-muted-foreground">
-              <TableCell className="text-center">4</TableCell>
-              <TableCell>
-                <Badge variant="destructive">D-9</Badge>
-              </TableCell>
-              <TableCell>2026년 5월 26일(월)</TableCell>
-              <TableCell>경남</TableCell>
-              <TableCell>
-                <Link
-                  href="/"
-                  className="hover:underline underline-offset-4 truncate block max-w-xs"
-                >
-                  2026 IRONMAN Gurye Korea
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Badge variant="ghost">접수미정</Badge>
-              </TableCell>
-              <TableCell>2025년 3월 11일(금)</TableCell>
-              <TableCell className="text-center">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="w-8 h-8 rounded hover:bg-brand/8 hover:text-brand hover:border-brand/20"
-                  aria-label="2026 IRONMAN Gurye Korea 자세히 보기"
-                  asChild
-                >
-                  <Link href="/">
-                    <Eye className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-              </TableCell>
-            </TableRow>
+                  <TableCell className="text-center">{index + 1}</TableCell>
+                  <TableCell>
+                    {dday !== "-" ? (
+                      <Badge variant={getMarathonDDayVariant(dday)}>
+                        {dday}
+                      </Badge>
+                    ) : (
+                      <span>-</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {formatMarathonDate(marathon.event_start_at)}
+                  </TableCell>
+                  <TableCell>{marathon.location_region ?? "미정"}</TableCell>
+                  <TableCell>
+                    <Link
+                      href={detailHref}
+                      className="hover:underline underline-offset-4 truncate block max-w-xs"
+                    >
+                      {marathon.name}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={getMarathonStatusVariant(
+                        marathon.registration_status,
+                      )}
+                    >
+                      {marathon.registration_status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {formatMarathonDatetime(marathon.registration_start_at)}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="w-8 h-8 rounded hover:bg-brand/8 hover:text-brand hover:border-brand/20"
+                      aria-label={`${marathon.name} 자세히 보기`}
+                      asChild
+                    >
+                      <Link href={detailHref}>
+                        <Eye className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </div>
